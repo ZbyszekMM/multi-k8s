@@ -1,0 +1,10 @@
+
+FROM node:alpine
+WORKDIR '/app'
+COPY ./package.json ./
+RUN npm install
+COPY . .
+
+# tu mamy wykorzystanie nodemon, stąd NIE mamy npm run start
+# "dev" jest JEDNYM ze skryptów zdefiniowanych package.json, jako - po prostu - nodemon
+CMD ["npm", "run", "dev"]
