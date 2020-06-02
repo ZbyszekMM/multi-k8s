@@ -23,10 +23,12 @@ spec:
             - containerPort: 5432
           volumeMounts:
             - name: postgres-storage
-              mountPath: /var/lib/postgresql/data/db-data
+              mountPath: /var/lib/postgresql/data/
           env: # kwestia obiektu secret omówiona w helpers/kubernetes
             - name: POSTGRES_PASSWORD
               valueFrom: 
                 secretKeyRef:
                   name: pgpassword
                   key: PGPASSWORD
+            - name: PGDATA
+              value: var/lib/postgresql/data/dbdata
