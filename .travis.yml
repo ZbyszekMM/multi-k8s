@@ -26,10 +26,8 @@ script:
   # run tests
   - docker run -e CI=true zbyszekm/react-test npm run test 
 
-deploy:
-  # wszystkie instrukcje będą w oddzielnym skrypcie, a nie tutaj.  Wprzypadku AWS Beanstalk, travis powiedział Beanstalk gdzie jest kod projektu - to wystarczyło
-  # 
-  - provider: script 
-  - script: bash ./deploy.sh
-  - on:
+deploy: # wszystkie instrukcje będą w oddzielnym skrypcie, a nie tutaj.  Wprzypadku AWS Beanstalk, travis powiedział Beanstalk gdzie jest kod projektu - to wystarczyło
+  provider: script 
+  script: bash ./deploy.sh
+  on:
     branch: master
