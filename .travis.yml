@@ -20,7 +20,7 @@ before_install: #pierwsza komenda to travis odszyfrowuje hasło do service accou
   #login do dockera
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin # pipe podszywa się pod stdin
   # zbuduj testowe kontenery, nazwy są tymczasowe
-  - docker build -t zbyszekm/react-test -f .client/Dockerfile.dev ./client #ostatni parametr do build kontekst, 
+  - docker build -t zbyszekm/react-test -f ./client/Dockerfile.dev ./client #ostatni parametr do build kontekst, 
 
 script:
   # run tests
