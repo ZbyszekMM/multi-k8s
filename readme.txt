@@ -1,5 +1,9 @@
 ŻRÓÐŁO:
-    * Udemy.Docker & Kubernetes - the complete quide. Section 14 - Multicontainer app with Kubernetes
+    * Udemy.Docker & Kubernetes - the complete quide:
+          * Section 14 - Multicontainer app with Kubernetes
+          * Section 15
+          * Section 16 - Kubernetes production deployment
+
     * Kod w wersji docker/4fibo2020/, część plików jest usunięte, np. docker-compose.yml
 
 
@@ -20,8 +24,11 @@ PLIKI:
   3. client-node-port.yaml - specyfikacja portów
 
 SET UP:
-  1. musi być stworzony obiekt sekret, w którym jest hasło do postgres. Do tego komenda ineraktywna, nie jest przechowywany w pliku
+  1. musi być stworzony obiekt sekret, w którym jest hasło do postgres. Do tego komenda interaktywna, nie jest przechowywany w pliku
        kubectl create secret generic pgpassword --from-literal PGPASSWORD=Jedrek06
+
+INTEGRATIONS:
+  1. <Zasocjowana> nazwa zdalnego repo github: remote-repo (używana w komendach git)
 
 WYWOŁANIE: 
   1. Uzyskaj adres vm zarządzanej przez minikube (minikube ip)

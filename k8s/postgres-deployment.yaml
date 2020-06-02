@@ -24,7 +24,7 @@ spec:
           volumeMounts:
             - name: postgres-storage
               mountPath: /var/lib/postgresql/data
-          env:
+          env: # kwestia obiektu secret omówiona w helpers/kubernetes
             - name: POSTGRES_PASSWORD
               valueFrom: 
                 secretKeyRef:

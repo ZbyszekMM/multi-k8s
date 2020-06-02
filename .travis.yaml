@@ -1,0 +1,35 @@
+sudo: required #na skutek dockera potrzebujemy sudo
+services: 
+  - docker # docker service should be preinstalled as soon as we try our build
+env:
+  global:
+  - SHA=$(git rev-parse HEAD) # tworzymy unikalny identyfikator z gitowskiego identyfikatora commit'u.
+  - CLOUDSDK_CORE_DISABLE_PROMPTS=1 # wymusza na GC, żeby nie używał interaktywnych "prompt'ów" podczas wykonywania komend
+before_install: #pierwsza komenda to travis odszyfrowuje hasło do service account w GC. Instrukcja szyfrowania w docker-course-notes
+  - openssl aes-256-cbc -K $encrypted_e8b4c564e319_key -iv $encrypted_e8b4c564e319_iv -in GS-ServiceAccountPswdEnc.json.enc -out GS-ServiceAccountPswdEnc.json -d
+  - curl https://sdk.cloud.google.com | bash > /dev/null;  #install google cloud sdk - chyba zawiera też kubernetes
+  - source $HOME/google-cloud-sdk/path.bash.inc
+  - gcloud components update kubectl # install kubectl
+  # plik GS-ServiceAccountPswdEnc.json to był ten oryginalny plik poddany szyfrowaniu. Moja nie do końca sensowne zmiany nazw. 
+  - gcloud auth activate-service-account --key-file GS-ServiceAccountPswdEnc.json #odpowiednik IAM z AWS, autoryzuje w GC użytkownika opisanego w .json do działanń na klastrze k8 w GC
+ 
+  # kolejne 3 kroki TRZEBA POWTÓRZYĆ w GC shell - te poniżej są wykonane tylko podczas testów travisa
+  - gcloud config set project multi-k8s-278420 # to jest id projektu nadawane przez GC
+  - gcloud config set compute/zone europe-west1-d
+  - gcloud container clusters get-credentials mullti-k8s # ustawia klaster k8s w którym odbywadź się będą działania. PECH, mam podwójne L w nazwie klastra !
+  #login do dockera
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin # pipe podszywa się pod stdin
+  # zbuduj testowe kontenery, nazwy są tymczasowe
+  - docker build -t zbyszekm/react-test -f .client//Dockerfile.dev ./client #ostatni parametr do build kontekst, 
+
+script:
+  # run tests
+  - docker run -e CI=true zbyszekm/react-test npm run test 
+
+deploy:
+  # wszystkie instrukcje będą w oddzielnym skrypcie, a nie tutaj.  Wprzypadku AWS Beanstalk, travis powiedział Beanstalk gdzie jest kod projektu - to wystarczyło
+  # 
+  - provider: script 
+  - script: bash ./deploy.sh
+  - on:
+    branch: master

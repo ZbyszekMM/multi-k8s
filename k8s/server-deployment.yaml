@@ -31,7 +31,7 @@ spec:
             - name: PGDATABASE
               value: postgres
             - name: POSTGRES_PASSWORD
-              valueFrom: 
+              valueFrom: # kwestia obiektu secret omówiona w helpers/kubernetes
                 secretKeyRef: 
                   name: pgpassword
                   key: PGPASSWORD
