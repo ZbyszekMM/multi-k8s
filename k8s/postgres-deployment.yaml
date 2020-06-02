@@ -30,5 +30,6 @@ spec:
                 secretKeyRef:
                   name: pgpassword
                   key: PGPASSWORD
+            #ta zmienna zawiera info dla postgres gdzie są dane. Bez tego, zakłada default (val/lib/postgresql/data), w którym jest dir lost+found i nie chce kontynuować
             - name: PGDATA
               value: var/lib/postgresql/data/dbdata

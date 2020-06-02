@@ -1,7 +1,7 @@
 # dyskusja tagu uzyskanego ze zmiennej środowiskowej $SHA jest w docker-course-notes
  docker build -t zbyszekm/multi-container-client:latest -t zbyszekm/multi-container-client:$SHA -f ./client/Dockerfile ./client
  docker build -t zbyszekm/multi-container-server:latest -t zbyszekm/multi-container-server:$SHA  -f ./server/Dockerfile ./server
- docker build -t zbyszekm/multi-container-worker:latest -t -t zbyszekm/multi-container-worker:$SHA  -f ./worker/Dockerfile ./worker
+ docker build -t zbyszekm/multi-container-worker:latest -t zbyszekm/multi-container-worker:$SHA  -f ./worker/Dockerfile ./worker
 
 
  docker push zbyszekm/multi-container-client:latest
